@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var rvPasien: RecyclerView
+    private lateinit var tvNama: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var adapter: PasienAdapter
@@ -31,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
         rvPasien = findViewById(R.id.rvPasien)
         progressBar = findViewById(R.id.progressBar)
         fabAdd = findViewById(R.id.fabAdd)
+        tvNama = findViewById(R.id.tvNamaPasien)
 
         // 2. Setup RecyclerView dengan lambda untuk Edit dan Delete
         adapter = PasienAdapter(
@@ -59,6 +62,10 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, AddPasienActivity::class.java)
             startActivity(intent)
         }
+
+        // ⚠️ 5. Tangkap data nama dari MainActivity dan tampilkan ke TextView
+        val namaUser = intent.getStringExtra("extra_name") ?: "User"
+        tvNama.text = "Selamat Datang, $namaUser"
 
         // 4. Load data awal dari API
         loadPasien()
